@@ -16,9 +16,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pymupdf>=1.26.0 \
     pillow>=11.0.0
 
-# Copy frontend app and streamlit configuration
+# Copy frontend app
 COPY ui/ ./ui/
-COPY .streamlit/ ./.streamlit/
 
 # Expose port for Streamlit
 EXPOSE 8501
