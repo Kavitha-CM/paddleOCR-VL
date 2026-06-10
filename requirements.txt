@@ -1,0 +1,8 @@
+paddleocr[doc-parser]>=3.6.0
+pillow>=11.0.0
+pymupdf>=1.26.0
+opencv-python>=4.11.0
+numpy>=2.2.0
+
+#paddlepaddle-gpu
+#pip install paddlepaddle-gpu==3.3.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
