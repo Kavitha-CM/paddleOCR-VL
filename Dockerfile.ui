@@ -1,0 +1,31 @@
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies (build-essential is sometimes useful for pip packages)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install only the UI-specific requirements to keep the frontend container lightweight (no heavy ML models)
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+    streamlit>=1.24.0 \
+    requests>=2.31.0 \
+    pymupdf>=1.26.0 \
+    pillow>=11.0.0
+
+# Copy frontend app and streamlit configuration
+COPY ui/ ./ui/
+COPY .streamlit/ ./.streamlit/
+
+# Expose port for Streamlit
+EXPOSE 8501
+
+# Environment variables
+ENV PYTHONUNBUFFERED=1
+ENV BACKEND_URL=http://backend:8000
+
+# Command to run Streamlit
+CMD ["python", "-m", "streamlit", "run", "ui/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
